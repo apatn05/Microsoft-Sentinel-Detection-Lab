@@ -1,0 +1,10 @@
+SecurityEvent
+| where EventID == 1102
+| extend ActorAccount=iff(isnotempty(SubjectAccount), SubjectAccount, Account)
+| extend ActorName=tostring(split(ActorAccount, "\\")[-1])
+| project
+    TimeGenerated,
+    Computer,
+    Activity,
+    ActorAccount,
+    ActorName

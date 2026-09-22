@@ -1,0 +1,14 @@
+SecurityEvent
+| where EventID == 4732
+| where TargetAccount endswith @"\Administrators"
+| extend ActorName = tostring(split(SubjectAccount, "\\")[-1])
+| extend AddedMember = tostring(column_ifexists("MemberName", ""))
+| extend AddedMemberSid = tostring(column_ifexists("MemberSid", ""))
+| project
+    TimeGenerated,
+    Computer,
+    SubjectAccount,
+    ActorName,
+    TargetAccount,
+    AddedMember,
+    AddedMemberSid

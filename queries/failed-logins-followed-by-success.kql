@@ -1,0 +1,36 @@
+let Failures =
+    SecurityEvent
+    | where EventID == 4625
+    | extend AccountName=tolower(tostring(split(TargetAccount, "\\")[-1]))
+    | summarize
+        FailedAttempts=count(),
+        FirstFailure=min(TimeGenerated),
+        LastFailure=max(TimeGenerated),
+        FailureIP=any(IpAddress)
+        by Computer, AccountName, FailureWindow=bin(TimeGenerated, 5m)
+    | where FailedAttempts >= 5;
+let Successes =
+    SecurityEvent
+    | where EventID == 4624
+    | extend AccountName=tolower(tostring(split(TargetAccount, "\\")[-1]))
+    | project
+        SuccessTime=TimeGenerated,
+        Computer,
+        AccountName,
+        SuccessfulAccount=TargetAccount,
+        SuccessIP=IpAddress,
+        LogonTypeName;
+Failures
+| join kind=inner Successes on Computer, AccountName
+| where SuccessTime between (LastFailure .. LastFailure + 30m)
+| project
+    TimeGenerated=SuccessTime,
+    Computer,
+    AccountName,
+    SuccessfulAccount,
+    FailedAttempts,
+    FirstFailure,
+    LastFailure,
+    FailureIP,
+    SuccessIP,
+    LogonTypeName

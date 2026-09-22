@@ -1,0 +1,19 @@
+SecurityEvent
+| where EventID == 4625
+| summarize
+    FailedAttempts = count(),
+    StartTime = min(TimeGenerated),
+    EndTime = max(TimeGenerated),
+    SourceIP = any(IpAddress)
+    by TargetAccount, Computer, bin(TimeGenerated, 5m)
+| where FailedAttempts >= 5
+| extend AccountName = tostring(split(TargetAccount, "\\")[-1])
+| project
+    TimeGenerated = EndTime,
+    StartTime,
+    EndTime,
+    Computer,
+    TargetAccount,
+    AccountName,
+    SourceIP,
+    FailedAttempts

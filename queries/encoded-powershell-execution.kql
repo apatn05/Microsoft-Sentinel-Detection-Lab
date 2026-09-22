@@ -1,0 +1,14 @@
+SecurityEvent
+| where EventID == 4688
+| where NewProcessName endswith @"\powershell.exe"
+    or NewProcessName endswith @"\pwsh.exe"
+| where tolower(CommandLine) contains "-encodedcommand"
+| extend AccountName=tostring(split(Account, "\\")[-1])
+| extend CommandLinePreview=substring(CommandLine, 0, 200)
+| project
+    TimeGenerated,
+    Computer,
+    Account,
+    AccountName,
+    NewProcessName,
+    CommandLinePreview
