@@ -106,12 +106,14 @@ The exported dashboard is available as a [downloadable PDF](evidence/sentinel-de
 ```text
 .
 ├── README.md
-├── docs/
+├── diagram/
 │   └── architecture.svg
 ├── evidence/
-│   ├── incidents-overview.png
-│   ├── sentinel-detection-lab-dashboard.pdf
-│   └── workbook-overview.png
+│   ├── ByType.png
+│   ├── CustomIncidents.png
+│   ├── FailLogin.png
+│   └── Statistics1.png
+
 └── queries/
     ├── account-added-local-admins.kql
     ├── encoded-powershell-execution.kql
