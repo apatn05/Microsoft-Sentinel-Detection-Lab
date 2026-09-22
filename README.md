@@ -80,7 +80,7 @@ The lab produced six incidents from five custom detections. The repeated-failure
 ## Custom Detection Incidents
 ![Sentinel workbook overview](evidence/CustomIncidents.png)
 
-The exported dashboard is available as a [downloadable PDF](evidence/sentinel-detection-lab-dashboard.pdf).
+The exported dashboard is available as a [downloadable PDF](evidence/labreport.pdf).
 
 ## Cost and access controls
 
