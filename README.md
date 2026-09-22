@@ -15,7 +15,7 @@ All activity in this repository was generated intentionally in an isolated lab. 
 
 ## Architecture
 
-![Microsoft Sentinel lab architecture](docs/architecture.svg)
+![Microsoft Sentinel lab architecture](diagram/architecture.svg)
 
 Telemetry follows this path:
 
